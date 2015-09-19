@@ -88,10 +88,10 @@ angular.module('angular-inview', [])
 		# Custom checks on child `in-view` elements will be triggered when the
 		# `in-view-container` scrolls.
 		link: (scope, element, attrs, controller) ->
-			element.bind 'scroll', controller.checkInView
+			element.bind 'DOMMouseScroll MouseScrollEvent MozMousePixelScroll wheel scroll', controller.checkInView
 			trackInViewContainer controller
 			scope.$on '$destroy', ->
-				element.unbind 'scroll', controller.checkInView
+				element.unbind 'DOMMouseScroll MouseScrollEvent MozMousePixelScroll wheel scroll', controller.checkInView
 				untrackInViewContainer controller
 
 # ## Utilities
@@ -133,13 +133,13 @@ bindWindowEvents = ->
 	# The bind to window events will be added only if actually needed.
 	return if _windowEventsHandlerBinded
 	_windowEventsHandlerBinded = yes
-	angular.element(window).bind 'checkInView click ready scroll resize', windowEventsHandler
+	angular.element(window).bind 'checkInView click ready DOMMouseScroll MouseScrollEvent MozMousePixelScroll wheel scroll resize', windowEventsHandler
 unbindWindowEvents = ->
 	# All the window bindings will be removed if no directive requires to be checked.
 	return unless _windowEventsHandlerBinded
 	return if _windowInViewItems.length or _containersControllers.length
 	_windowEventsHandlerBinded = no
-	angular.element(window).unbind 'checkInView click ready scroll resize', windowEventsHandler
+	angular.element(window).unbind 'checkInView click ready DOMMouseScroll MouseScrollEvent MozMousePixelScroll wheel scroll resize', windowEventsHandler
 
 # ### InView checks
 # This method will call the user defined callback with the proper parameters if neccessary.

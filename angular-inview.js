@@ -112,10 +112,10 @@
         }
       ],
       link: function(scope, element, attrs, controller) {
-        element.bind('scroll', controller.checkInView);
+        element.bind('DOMMouseScroll MouseScrollEvent MozMousePixelScroll wheel scroll', controller.checkInView);
         trackInViewContainer(controller);
         return scope.$on('$destroy', function() {
-          element.unbind('scroll', controller.checkInView);
+          element.unbind('DOMMouseScroll MouseScrollEvent MozMousePixelScroll wheel scroll', controller.checkInView);
           return untrackInViewContainer(controller);
         });
       }
@@ -186,7 +186,7 @@
       return;
     }
     _windowEventsHandlerBinded = true;
-    return angular.element(window).bind('checkInView click ready scroll resize', windowEventsHandler);
+    return angular.element(window).bind('checkInView click ready DOMMouseScroll MouseScrollEvent MozMousePixelScroll wheel scroll resize', windowEventsHandler);
   };
 
   unbindWindowEvents = function() {
@@ -197,7 +197,7 @@
       return;
     }
     _windowEventsHandlerBinded = false;
-    return angular.element(window).unbind('checkInView click ready scroll resize', windowEventsHandler);
+    return angular.element(window).unbind('checkInView click ready DOMMouseScroll MouseScrollEvent MozMousePixelScroll wheel scroll resize', windowEventsHandler);
   };
 
   triggerInViewCallback = function(event, item, inview, isTopVisible, isBottomVisible) {
